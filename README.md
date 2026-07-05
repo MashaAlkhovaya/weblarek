@@ -118,7 +118,7 @@ Presenter - презентер содержит основную логику п
 `phone: string` - номер телефона.
 
 `type TPayment` - 'card' | 'cash' | '' (карта | наличные | пустая строка, если способ оплаты не выбран).
-`type TBuyerErrors = {payment?: string, address?: string, email?: string, phone?: string}` - ошибки в поле ввода.
+`type TBuyerErrors = Partial<Record<keyof IBuyer, string>>` - ключи автоматически берутся из полей интерфейса IBuyer (payment, address, email, phone).
 
 `interface IProductsResponse` - объект, который возвращает сервер в ответ на GET /product/.
 `total: number` - общее количество товаров на сервере.
@@ -140,7 +140,7 @@ Presenter - презентер содержит основную логику п
 `selectedProduct: IProduct | null` - Выбранная карточка.
 
 Методы:
-`getProducts(): IProduct[]` - Список товаров..
+`getProducts(): IProduct[]` - Список товаров.
 `saveSelected(product: IProduct): void` - Сохранение выбранной карточки.
 `getSelected(): IProduct | null` - Получение выбранной карточки.
 `getProductById(id: string): IProduct | undefined` - получение одного товара по id.

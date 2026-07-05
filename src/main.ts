@@ -77,7 +77,12 @@ console.log(`Данные покупателя после очистки: `, buy
 
 const api = new Api(API_URL);
 const productsApi = new ProductsApi(api);
-productsApi.getProductsList().then((response) => {
-  productsModel.setProducts(response.items);
-  console.log('Каталог с сервера:', productsModel.getProducts());
-});
+productsApi
+  .getProductsList()
+  .then((response) => {
+    productsModel.setProducts(response.items);
+    console.log("Каталог с сервера:", productsModel.getProducts());
+  })
+  .catch((error) => {
+    console.error("Ошибка при получении каталога с сервера:", error);
+  });

@@ -26,12 +26,7 @@ export interface IBuyer {
 
 export type TPayment = "card" | "cash" | "";
 
-export type TBuyerErrors = {
-  payment?: string;
-  address?: string;
-  email?: string;
-  phone?: string;
-};
+export type TBuyerErrors = Partial<Record<keyof IBuyer, string>>;
 
 export interface IProductsResponse {
   total: number;

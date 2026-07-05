@@ -35,19 +35,19 @@ export class BuyerProduct {
   validate(): TBuyerErrors {
     const errors: TBuyerErrors = {};
 
-    if (this.payment === "") {
+    if (!this.payment) {
       errors.payment = "Не выбран вид оплаты";
     }
 
-    if (this.email === "") {
+    if (!this.email) {
       errors.email = "Укажите емэйл";
     }
 
-    if (this.address === "") {
+    if (!this.address) {
       errors.address = "Укажите адрес";
     }
 
-    if (this.phone === "") {
+    if (!this.phone) {
       errors.phone = "Укажите телефон";
     }
 

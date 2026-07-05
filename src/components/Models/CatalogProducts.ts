@@ -21,10 +21,6 @@ export class CatalogProducts {
   }
 
   getProductById(id: string): IProduct | undefined {
-    for (let i = 0; i < this.products.length; i++) {
-      if (this.products[i].id == id) {
-        return this.products[i];
-      }
-    }
+    return this.products.find((product) => product.id === id);
   }
 }
