@@ -6,6 +6,11 @@ import { apiProducts } from "./utils/data";
 import { ProductsApi } from "./components/Api/ProductsApi";
 import { Api } from "./components/base/Api";
 import { API_URL } from "./utils/constants";
+import { ensureElement } from "./utils/utils";
+import { Header } from "./components/view/Header";
+import { EventEmitter} from "./components/base/Events";
+import {Gallery} from "./components/view/Gallery";
+import { Modal } from "./components/view/Modal";
 
 const productsModel = new CatalogProducts();
 productsModel.setProducts(apiProducts.items);
@@ -86,3 +91,16 @@ productsApi
   .catch((error) => {
     console.error("Ошибка при получении каталога с сервера:", error);
   });
+
+  
+  const events = new EventEmitter();
+  const headerContainer = ensureElement('.header');
+  const header = new Header(headerContainer, events);
+
+  const galleryContainer = ensureElement('.gallery');
+  const gallery = new Gallery(galleryContainer);
+  
+  const modalContainer = ensureElement('#modal-container');
+  const modal = new Modal(modalContainer, events);
+
+
