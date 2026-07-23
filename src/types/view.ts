@@ -36,3 +36,8 @@ export interface IBasket {
 export interface ISuccess {
   description: number;
 }
+
+export interface IForm {
+  submit: boolean;
+  errors: string;
+}
