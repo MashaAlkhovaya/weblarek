@@ -32,3 +32,7 @@ export interface IBasket {
   items: HTMLElement[];
   valid: boolean;
 }
+
+export interface ISuccess {
+  description: number;
+}

@@ -30,3 +30,4 @@ const gallery = new Gallery(galleryContainer);
 const modalContainer = ensureElement("#modal-container");
 const modal = new Modal(modalContainer, events);
 
+
