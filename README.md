@@ -145,6 +145,9 @@ Presenter - презентер содержит основную логику п
 
 Каталог товаров на главное странице, включающий в себя массив товаров.
 
+Конструктор:
+`constructor(events: IEvents)` — принимает брокер событий для оповещения об изменениях данных.
+
 Поля класса:
 `products: IProduct[]` - Массив товаров.
 `selectedProduct: IProduct | null` - Выбранная карточка.
@@ -156,9 +159,16 @@ Presenter - презентер содержит основную логику п
 `getProductById(id: string): IProduct | undefined` - получение одного товара по id.
 `setProducts(products: IProduct[]): void` - Сохранение массива товаров. Этот метод принимает на вход массив товаров, ничего не возвращает.
 
+События:
+`catalog:selected` — генерируется в saveSelected при сохранении выбранного товара.
+`catalog:changed` — генерируется в setProducts при обновлении списка товаров.
+
 ###### Класс BasketProducts
 
 Управляет содержимым корзины покупателя. Хранит выбранные товары, позволяет добавлять и удалять позиции
+
+Конструктор:
+`constructor(events: IEvents)` — принимает брокер событий для оповещения об изменениях данных.
 
 Поля класса:
 `products: IProduct[]` - Массив товаров.
@@ -172,9 +182,16 @@ Presenter - презентер содержит основную логику п
 `hasProduct(productId: string): boolean` - Узнать наличие товара. Возвращает true - если товар есть, иначе false.
 `clearBasket(): void` - метод очистки корзины после успешного оформления заказа.
 
+События:
+`basket:changed` — генерируется в addProduct, removeProduct и clearBasket
+при любом изменении содержимого корзины.
+
 ###### Класс BuyerProduct
 
 Форма заполнения данных покупателя, хранит в себе контактные данные и способы оплаты.
+
+Конструктор:
+`constructor(events: IEvents)` — принимает брокер событий для оповещения об изменениях данных.
 
 Поля класса:
 `payment: TPayment` - содержит в себе способы оплаты. 'card' | 'cash' | '' (карта | наличные | пустая строка, если способ оплаты не выбран)
@@ -188,6 +205,10 @@ Presenter - презентер содержит основную логику п
 `getData(): IBuyer` - Получение данных.
 `saveData(data: Partial<IBuyer>): void` - Сохранение данных.
 `clearBuyer(): void` - метод очистки данных покупателя.
+
+События:
+`buyer:changed` — генерируется в saveData и clearBuyer при любом изменении
+данных покупателя.
 
 ###### Слой коммуникации
 
@@ -288,7 +309,7 @@ Presenter - презентер содержит основную логику п
 текст категории и CSS-модификатор через categoryMap (см. constants.ts);
 если элемента нет — ничего не делает.
 
-###### Класс CardCatalog<T> extends Card<T>
+###### Класс CardCatalog extends Card
 
 Карточка товара для отображения в каталоге.
 
@@ -303,7 +324,7 @@ Presenter - презентер содержит основную логику п
 При клике по контейнеру карточки вызывается обработчик `onClick`, переданный
 в конструктор.
 
-###### Класс CardPreview<T> extends Card<T>
+###### Класс CardPreview extends Card<ICardPreview>
 
 Карточка товара для отображения в модальном окне превью. Содержит описание
 и кнопку добавления/удаления товара из корзины.
@@ -325,7 +346,7 @@ Presenter - презентер содержит основную логику п
 События:
 при клике на `buttonElement` вызывается обработчик `onClick`, переданный в конструктор.
 
-###### Класс CardBasket<T> extends Card<T>
+###### Класс CardBasket extends Card<ICardBasket>
 
 Карточка товара в списке корзины, с возможностью удаления.
 
@@ -402,7 +423,7 @@ Component, находит внутри container общие DOM-элементы
 
 Поля класса:
 `protected submitButton: HTMLButtonElement` — кнопка отправки формы.
-`protected errorElement: HTMLElement` — элемент отображения текста ошибки.
+`protected errorsElement: HTMLElement` — элемент отображения текста ошибки.
 
 Методы:
 `set valid(value: boolean)` — включает/выключает атрибут disabled у submitButton
@@ -414,13 +435,16 @@ Component, находит внутри container общие DOM-элементы
 `${container.name}:change` — при вводе в любое поле формы, с данными { field, value }.
 `${container.name}:submit` — при отправке формы (клик на submitButton).
 
-###### Класс Order extends Form<T>
+###### Класс Order extends Form<IOrder>
 
 Форма оплаты и адреса доставки. Управляет способом оплаты и полем адреса.
 
 Конструктор:
 `constructor(container: HTMLElement, events: IEvents)` — вызывает конструктор
 родителя Form, находит cardButton/cashButton/addressElement через ensureElement.
+
+Клик по `cardButton`/`cashButton` (`type="button"`, `input` для них не работает)
+вручную генерирует `order:change` с `{ field: 'payment', value: 'card' | 'cash' }`.
 
 Поля класса:
 `protected cardButton: HTMLButtonElement` — кнопка выбора оплаты картой.
@@ -432,7 +456,7 @@ Component, находит внутри container общие DOM-элементы
 `set cash(value: boolean)` — добавляет/удаляет класс активности у cashButton.
 `set address(value: string)` — устанавливает значение поля адреса.
 
-###### Класс Contacts extends Form<T>
+###### Класс Contacts extends Form<IContacts>
 
 Форма контактов покупателя. Управляет полями email и телефона.
 

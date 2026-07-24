@@ -1,12 +1,15 @@
 import { IBuyer } from "../../types";
 import { TPayment } from "../../types";
 import { TBuyerErrors } from "../../types";
+import { IEvents } from "../base/Events";
 
 export class BuyerProduct {
   protected payment: TPayment = "";
   protected address: string = "";
   protected email: string = "";
   protected phone: string = "";
+
+  constructor(protected events: IEvents) {}
 
   getData(): IBuyer {
     return {
@@ -22,6 +25,7 @@ export class BuyerProduct {
     this.address = "";
     this.email = "";
     this.phone = "";
+    this.events.emit("buyer:changed");
   }
 
   saveData(data: Partial<IBuyer>): void {
@@ -30,6 +34,7 @@ export class BuyerProduct {
     this.address = merged.address;
     this.email = merged.email;
     this.phone = merged.phone;
+    this.events.emit("buyer:changed");
   }
 
   validate(): TBuyerErrors {

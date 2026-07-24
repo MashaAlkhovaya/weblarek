@@ -48,3 +48,5 @@ export interface IOrder extends IForm, Pick<IBuyer, "address"> {
   card: boolean;
   cash: boolean;
 }
+
+export interface IContacts extends IForm, Pick<IBuyer, "email" | "phone"> {}

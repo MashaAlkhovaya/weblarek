@@ -11,16 +11,15 @@ import { EventEmitter } from "./components/base/Events";
 import { Gallery } from "./components/view/Gallery";
 import { Modal } from "./components/view/Modal";
 
-const productsModel = new CatalogProducts();
+const events = new EventEmitter();
 
-const basketProducts = new BasketProducts();
-
-const buyerProduct = new BuyerProduct();
+const productsModel = new CatalogProducts(events);
+const basketProducts = new BasketProducts(events);
+const buyerProduct = new BuyerProduct(events);
 
 const api = new Api(API_URL);
 const productsApi = new ProductsApi(api);
 
-const events = new EventEmitter();
 const headerContainer = ensureElement(".header");
 const header = new Header(headerContainer, events);
 
@@ -29,5 +28,3 @@ const gallery = new Gallery(galleryContainer);
 
 const modalContainer = ensureElement("#modal-container");
 const modal = new Modal(modalContainer, events);
-
-

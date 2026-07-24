@@ -4,34 +4,43 @@ import { IEvents } from "../base/Events";
 import { ensureElement } from "../../utils/utils";
 
 export class Order extends Form<IOrder> {
-   protected cardButton: HTMLButtonElement;
-   protected cashButton: HTMLButtonElement;
-   protected addressElement: HTMLInputElement;
+  protected cardButton: HTMLButtonElement;
+  protected cashButton: HTMLButtonElement;
+  protected addressElement: HTMLInputElement;
 
-   constructor(container: HTMLElement, events: IEvents) {
-      super(container, events);
+  constructor(container: HTMLElement, events: IEvents) {
+    super(container, events);
 
-      this.cardButton = ensureElement<HTMLButtonElement>('[name="card"]', this.container);
-      this.cashButton = ensureElement<HTMLButtonElement>('[name="cash"]', this.container);
-      this.addressElement = ensureElement<HTMLInputElement>('[name="address"]', this.container);
+    this.cardButton = ensureElement<HTMLButtonElement>(
+      '[name="card"]',
+      this.container,
+    );
+    this.cashButton = ensureElement<HTMLButtonElement>(
+      '[name="cash"]',
+      this.container,
+    );
+    this.addressElement = ensureElement<HTMLInputElement>(
+      '[name="address"]',
+      this.container,
+    );
 
-      this.cardButton.addEventListener('click' , () => {
-        events.emit('order:change', { field: 'payment', value: 'card'});
-      });
+    this.cardButton.addEventListener("click", () => {
+      events.emit("order:change", { field: "payment", value: "card" });
+    });
 
-      this.cashButton.addEventListener('click',() => { 
-        events.emit('order:change', { field: 'payment', value: 'cash'});
-   });
+    this.cashButton.addEventListener("click", () => {
+      events.emit("order:change", { field: "payment", value: "cash" });
+    });
   }
-   set card(value:boolean) {
-    this.cardButton.classList.toggle('button_alt-active', value);
-   }
+  set card(value: boolean) {
+    this.cardButton.classList.toggle("button_alt-active", value);
+  }
 
-   set cash (value : boolean){
-    this.cashButton.classList.toggle ('button_alt-active', value);
-   }
+  set cash(value: boolean) {
+    this.cashButton.classList.toggle("button_alt-active", value);
+  }
 
-   set address(value:string) {
+  set address(value: string) {
     this.addressElement.value = value;
-   }
+  }
 }
