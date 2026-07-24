@@ -3,7 +3,7 @@ import { IForm } from "../../types/view";
 import { IEvents } from "../base/Events";
 import { ensureElement } from "../../utils/utils";
 
-export class Form extends Component<IForm> {
+export class Form<T extends IForm = IForm> extends Component<T> {
   protected submitButton: HTMLButtonElement;
   protected errorsElement: HTMLElement;
 

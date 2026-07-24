@@ -1,3 +1,5 @@
+import { IBuyer } from "../types/index";
+
 export interface IHeader {
   counter: number;
 }
@@ -38,6 +40,11 @@ export interface ISuccess {
 }
 
 export interface IForm {
-  submit: boolean;
+  valid: boolean;
   errors: string;
+}
+
+export interface IOrder extends IForm, Pick<IBuyer, "address"> {
+  card: boolean;
+  cash: boolean;
 }
